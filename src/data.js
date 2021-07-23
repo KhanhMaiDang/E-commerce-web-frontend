@@ -1,12 +1,12 @@
 const data = {
     products: [
         {
-            _id: '1',
+            _id: '3',
             name: 'Cho tôi xin một vé đi tuổi thơ',
             author: 'Nguyễn Nhật Ánh',
             publisher: 'NXB Trẻ',
             category: 'Truyện dài',
-            image: '/images/product-1.jpg',
+            image: '/images/cho-toi-xin-mot-ve-di-tuoi-tho.jpg',
             price: (53000).toLocaleString('vi', { style: 'currency', currency: 'VND' }),
             remaining: 100,
             rating: 4.5,
@@ -22,25 +22,25 @@ const data = {
             price: 56500,
             remaining: 100,
             image: '/images/ben-xe.jpg',
-            category: 'Truyện ngôn tình',
+            category: 'Truyện ngắn-Tản văn- Tạp văn',
             rating: 3.0,
             numReviews: 5
         },
         {
-            _id: '3',
+            _id: '4',
             name: 'Muôn Kiếp Nhân Sinh 2',
             author: 'Nguyên Phong',
             publisher: 'Nhà Xuất Bản Tổng hợp TP.HCM',
             description: 'CUỐN SÁCH CỦA NHỮNG CÁNH BƯỚM RUNG ĐỘNG \n Tác phẩm Muôn Kiếp Nhân Sinh tập 1 của tác giả Nguyên Phong xuất bản giữa tâm điểm của đại dịch đã thực sự tạo nên một hiện tượng xuất bản hiếm có ở Việt Nam. Cuốn sách đã khơi dậy những trực cảm tiềm ẩn của con người, làm thay đổi góc nhìn cuộc sống và thức tỉnh nhận thức của chúng ta giữa một thế giới đang ngày càng bất ổn và đầy biến động. Ngoài việc phát hành hơn 200.000 bản trong 6 tháng, chưa kể lượng phát hành Ebook và Audio Book qua Voiz-FM, First News còn nhận được hàng ngàn tin nhắn, e-mail chuyển lời cảm ơn đến tác giả Nguyên Phong. Điều này chứng tỏ sức lan tỏa của cuốn sách đã tạo nên một hiện tượng trong văn hóa đọc của năm 2020.',
             price: 183500,
             remaining: 100,
-            image: '/images/p2.jpg',
+            image: '/images/muonkiepnhansinh2-bia-01.jpg',
             category: 'Sách Tôn Giáo - Tâm Linh',
             rating: 3.5,
             numReviews: 5
         },
         {
-            _id: '4',
+            _id: '5',
             name: 'Dấu chân trên cát',
             author: 'Nguyên Phong',
             publisher: 'Nhà Xuất Bản Tổng hợp TP.HCM',
@@ -53,7 +53,7 @@ const data = {
             numReviews: 5
         },
         {
-            _id: '5',
+            _id: '6',
             name: 'Sự Im Lặng Của Bầy Cừu (Tái Bản)',
             author: 'Thomas Harris',
             publisher: 'Nhã Nam',
@@ -66,7 +66,7 @@ const data = {
             numReviews: 5
         },
         {
-            _id: '6',
+            _id: '7',
             name: 'Giết Con Chim Nhại (Tái Bản)',
             author: 'Harper Lee',
             publisher: 'Nhã Nam',

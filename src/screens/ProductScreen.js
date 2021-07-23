@@ -1,12 +1,12 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
 import data from '../data'
 
 
 export default function ProductScreen(props) {
-    const product = data.products.find((x) => x.id === props.match.params.id);
-    { console.log(product) };
+    const product = data.products.find((x) => x._id === props.match.params.id);
     if (!product) {
         <div>Product Not Found</div>
     }
@@ -16,8 +16,7 @@ export default function ProductScreen(props) {
             <Link to="/">Back to result</Link>
             <div className="row top" >
                 <div className="col-2">
-                    {console.log(product.image)}
-                    <img className="large" src={`data:image/jpg;base64, ${product.image}`} alt={product.name} />
+                    <img className="large" src={product.image} alt={product.name} />
                 </div>
                 <div className="col-1">
                     <ul>
