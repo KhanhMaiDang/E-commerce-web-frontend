@@ -5,7 +5,8 @@ import data from '../data'
 
 
 export default function ProductScreen(props) {
-    const product = data.products.find((x) => x._id === props.match.params.id);
+    const product = data.products.find((x) => x.id === props.match.params.id);
+    { console.log(product) };
     if (!product) {
         <div>Product Not Found</div>
     }
@@ -15,12 +16,22 @@ export default function ProductScreen(props) {
             <Link to="/">Back to result</Link>
             <div className="row top" >
                 <div className="col-2">
-                    <img className="large" src={product.image} alt={product.name} />
+                    {console.log(product.image)}
+                    <img className="large" src={`data:image/jpg;base64, ${product.image}`} alt={product.name} />
                 </div>
                 <div className="col-1">
                     <ul>
                         <li>
                             <h1>{product.name}</h1>
+                        </li>
+                        <li>
+                            Author: {product.author}
+                        </li>
+                        <li>
+                            Publisher: {product.publisher}
+                        </li>
+                        <li>
+                            Category: {product.category}
                         </li>
                         <li>
                             <Rating rating={product.rating} numReviews={product.numReviews} />
@@ -44,7 +55,7 @@ export default function ProductScreen(props) {
                                 {product.remaining > 0 ? (
                                     <span className="success">In stock</span>
                                 ) : (
-                                    <span className="error">Unavailable</span>
+                                    <span className="danger">Unavailable</span>
                                 )}
                             </div>
                         </div>
