@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/productConstants";
+import { PRODUCT_CATEGORY_LIST_FAIL, PRODUCT_CATEGORY_LIST_REQUEST, PRODUCT_CATEGORY_LIST_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/productConstants";
 
 export const listProducts = () => async (dispatch) => {
     dispatch({
@@ -26,3 +26,15 @@ export const detailsProduct = (productId) => async (dispatch) => {
         });
     }
 }
+
+export const listProductCategories = () => async (dispatch) => {
+    dispatch({
+        type: PRODUCT_CATEGORY_LIST_REQUEST,
+    });
+    try {
+        const { data } = await Axios.get(`/api/bookstore/public/categories`);
+        dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+    }
+};
