@@ -7,18 +7,30 @@ import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import ProductsInCategoryScreen from './screens/ProductsInCategoryScreen';
+import SigninScreen from './screens/SigninScreen';
+import { signout } from './actions/userActions';
+import RegisterScreen from './screens/RegisterScreen';
 
 
 function App() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const dispatch = useDispatch();
-
   const productCategoryList = useSelector(state => state.productCategoryList);
   const { loading: loadingCategories, error: errorCategories, categories } = productCategoryList;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   useEffect(() => {
     dispatch(listProductCategories());
   }, [dispatch]);
+
+  const handleLoggedOut = () => {
+    alert("Log out successfully");
+  }
+
+  const signoutHandler = () => {
+    dispatch(signout(handleLoggedOut));
+  }
 
   return (
     <BrowserRouter>
@@ -35,7 +47,17 @@ function App() {
             <a href="/">Boko</a>
           </div>
           <div>
-            <a href="/signin">Sign in</a>
+            {
+              userInfo ? (
+                <div className="dropdown">
+                  <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i></Link>
+                  <ul className="dropdown-content">
+                    <Link to="/" onClick={signoutHandler}>Sign out</Link>
+                  </ul>
+                </div>
+              ) : (
+                <Link to="/signin">Sign in/Sign up</Link>
+              )}
           </div>
         </header>
         <aside className={sidebarIsOpen ? 'open' : ''}>
@@ -69,8 +91,9 @@ function App() {
           </ul>
         </aside>
         <main>
-          <Route path={`/public/categories/:id`} component={ProductsInCategoryScreen} exact></Route>
-          {/*<Route path={`/public/categories/${c.name}/:id`} component={ProductsInCategoryScreen}></Route>*/}
+          <Route path={`/public/categories/:id`} component={ProductsInCategoryScreen} ></Route>
+          <Route path="/signin" component={SigninScreen}></Route>
+          <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/product/:id" component={ProductScreen}></Route>
           <Route path="/" component={HomeScreen} exact></Route>
 

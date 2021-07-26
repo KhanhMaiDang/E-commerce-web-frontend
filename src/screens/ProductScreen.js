@@ -7,6 +7,7 @@ import { detailsProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
+import Star from '../components/Star';
 
 
 export default function ProductScreen(props) {
@@ -14,6 +15,8 @@ export default function ProductScreen(props) {
     const productId = props.match.params.id;
     const productDetails = useSelector(state => state.productDetails);
     const { loading, error, product } = productDetails;
+
+    const [selectedStar, setSelectedStar] = useState(0);
 
     useEffect(() => {
         dispatch(detailsProduct(productId));
@@ -23,13 +26,14 @@ export default function ProductScreen(props) {
         return price.toLocaleString('vi', { style: 'currency', currency: 'VND' });
     }
 
+    const handleSelectStar = (star) => { setSelectedStar(star) }
+
     return (
         <div>
             {loading ? <LoadingBox></LoadingBox>
                 : error ? <MessageBox variant="danger">{error}</MessageBox>
                     : (
                         <div>
-                            <Link to="/">Back to result</Link>
                             <div className="row top" >
                                 <div className="col-2">
                                     <img className="large" src={`data:image/jpg;base64, ${product.image}`} alt={product.name} />
@@ -73,8 +77,12 @@ export default function ProductScreen(props) {
                                                     <span className="danger">Unavailable</span>
                                                 )}
                                             </div>
+
+
                                         </div>
                                     </div>
+
+                                    <Star onSelectStar={handleSelectStar} defaultStar={selectedStar} />
                                 </div>
                             </div>
                         </div>

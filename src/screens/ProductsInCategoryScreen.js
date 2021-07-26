@@ -35,7 +35,6 @@ export default function ProductsInCategoryScreen(props) {
                 : error ? <MessageBox variant="danger">{error}</MessageBox>
                     : (
                         <div>
-                            <Link to="/">Back to result</Link>
                             <div className="row center">
                                 {products.map(product => (
                                     <Product key={product.id} product={product}></Product>
