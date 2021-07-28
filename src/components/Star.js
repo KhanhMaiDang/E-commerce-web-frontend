@@ -15,7 +15,7 @@ export default function Star({ onSelectStar, defaultStar = 0 }) {
             {
                 stars.map((star) =>
 
-                    <span onMouseEnter={() => handleMouseEnter(star)} onClick={() => onSelectStar?.(star)}>
+                    <span key={star} onMouseEnter={() => handleMouseEnter(star)} onClick={() => onSelectStar?.(star)}>
                         <i className={star <= previewStar ? "fa fa-star" : 'fa fa-star-o'} ></i>
                     </span>
                 )

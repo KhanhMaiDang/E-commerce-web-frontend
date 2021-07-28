@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsProduct } from '../actions/productActions';
+import AddRating from '../components/AddRating';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
-import Star from '../components/Star';
+import RatingList from '../components/RatingList';
 
 
 export default function ProductScreen(props) {
@@ -15,18 +16,25 @@ export default function ProductScreen(props) {
     const productId = props.match.params.id;
     const productDetails = useSelector(state => state.productDetails);
     const { loading, error, product } = productDetails;
-
-    const [selectedStar, setSelectedStar] = useState(0);
+    const [ratingList, setRatingList] = useState([]);
 
     useEffect(() => {
         dispatch(detailsProduct(productId));
     }, [dispatch, productId]);
 
+    useEffect(() => {
+        axios.get(`/api/bookstore/public/books/${productId}/ratings`)
+            .then(response => { setRatingList(response.data) })
+            .catch(reason => console.error(reason))
+    }, [productId]);
+
     const convertToString = (price) => {
         return price.toLocaleString('vi', { style: 'currency', currency: 'VND' });
     }
 
-    const handleSelectStar = (star) => { setSelectedStar(star) }
+    const handleNewRatingAdded = (rating) => {
+        setRatingList(prev => [rating, ...prev])
+    }
 
     return (
         <div>
@@ -53,7 +61,7 @@ export default function ProductScreen(props) {
                                             Category: {product.category}
                                         </li>
                                         <li>
-                                            <Rating rating={product.rating} numReviews={product.numReviews} />
+                                            <Rating rating={product.avgRating} numReviews={product.numReviews} />
                                         </li>
                                         <li>
                                             Price: {convertToString(product.price)}
@@ -65,6 +73,11 @@ export default function ProductScreen(props) {
                                             </p>
                                         </li>
                                     </ul>
+                                    {
+                                        (ratingList.length !== 0) ?
+                                            <RatingList ratingList={ratingList} />
+                                            : <h1>No review yet</h1>
+                                    }
                                 </div>
                                 <div className="col-1">
                                     <div className="card card-body">
@@ -77,12 +90,11 @@ export default function ProductScreen(props) {
                                                     <span className="danger">Unavailable</span>
                                                 )}
                                             </div>
-
-
                                         </div>
                                     </div>
 
-                                    <Star onSelectStar={handleSelectStar} defaultStar={selectedStar} />
+                                    <AddRating bookId={productId} onNewRatingAdded={handleNewRatingAdded} />
+
                                 </div>
                             </div>
                         </div>

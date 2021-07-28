@@ -10,6 +10,10 @@ import ProductsInCategoryScreen from './screens/ProductsInCategoryScreen';
 import SigninScreen from './screens/SigninScreen';
 import { signout } from './actions/userActions';
 import RegisterScreen from './screens/RegisterScreen';
+import AdminRoute from './components/AdminRoute';
+import ManageCategoryScreen from './screens/ManageCategoryScreen';
+import ManageProductScreen from './screens/ManageProductScreen';
+import ManageCustomerScreen from './screens/ManageCustomerScreen';
 
 
 function App() {
@@ -48,15 +52,33 @@ function App() {
           </div>
           <div>
             {
+              (userInfo && userInfo.roles.includes("ADMIN") && (
+                <div className="dropdown">
+                  <Link to="#admin">Admin {' '} <i className="fa fa-caret-down"></i></Link>
+                  <ul className="dropdown-content" style={{ textAlign: "center" }}>
+                    <li>
+                      <Link to="/admin/productlist">Manage product</Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/categorylist">Manage category</Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/customerlist">Manage customer</Link>
+                    </li>
+                  </ul>
+                </div>
+              ))
+            }
+            {
               userInfo ? (
                 <div className="dropdown">
-                  <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i></Link>
+                  <Link to="#">Hi, {userInfo.name} <i className="fa fa-caret-down"></i></Link>
                   <ul className="dropdown-content">
                     <Link to="/" onClick={signoutHandler}>Sign out</Link>
                   </ul>
                 </div>
               ) : (
-                <Link to="/signin">Sign in/Sign up</Link>
+                <Link to="/signin">Sign in</Link>
               )}
           </div>
         </header>
@@ -95,6 +117,9 @@ function App() {
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/product/:id" component={ProductScreen}></Route>
+          <AdminRoute path="/admin/productlist" component={ManageProductScreen} exact></AdminRoute>
+          <AdminRoute path="/admin/categorylist" component={ManageCategoryScreen} exact></AdminRoute>
+          <AdminRoute path="/admin/customerlist" component={ManageCustomerScreen} exact></AdminRoute>
           <Route path="/" component={HomeScreen} exact></Route>
 
         </main>
