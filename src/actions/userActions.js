@@ -73,6 +73,7 @@ export const deleteUser = (userId) => async (dispatch) => {
                 "Authorization": `Bearer ${token}`,
             }
         });
+        dispatch(listCustomers());
         dispatch({ type: USER_DELETE_SUCCESS, payload: data, success: true });
 
     } catch (error) {
