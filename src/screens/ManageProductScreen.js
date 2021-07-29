@@ -52,6 +52,29 @@ export default function ManageProductScreen(props) {
         setImageB64(product.image);
     }
 
+    // const submitHandler = (e) => {
+    //     e.preventDefault();
+    //     if (!id) {
+    //         setImageB64('');
+    //     }
+    //     const trimmedCat = category.trim();
+    //     console.log("Category " + category);
+    //     console.log(trimmedCat);
+    //     let formData = new FormData();
+    //     if (image) {
+    //         formData.append("file", image);
+    //     }
+    //     // if (id)
+    //     dispatch(createOrUpdateProduct({ id, name, author, publisher, description, category: trimmedCat, price, remaining }, formData));
+    //     //else put request
+    // }
+
+    const handleUpdateSuccess = () => {
+        setImage('');
+        setImageB64('');
+    }
+
+
     const submitHandler = (e) => {
         e.preventDefault();
         if (!id) {
@@ -65,9 +88,10 @@ export default function ManageProductScreen(props) {
             formData.append("file", image);
         }
         // if (id)
-        dispatch(createOrUpdateProduct({ id, name, author, publisher, description, category: trimmedCat, price, remaining }, formData));
+        dispatch(createOrUpdateProduct({ id, name, author, publisher, description, category: trimmedCat, price, remaining }, formData, handleUpdateSuccess));
         //else put request
     }
+
 
     const deleteHandler = (product) => {
         dispatch(deleteProduct(product.id));

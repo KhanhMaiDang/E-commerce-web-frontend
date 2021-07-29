@@ -25,7 +25,7 @@ export const listFeatureProducts = () => async (dispatch) => {
     }
 }
 
-export const createOrUpdateProduct = (productInfo, formData) => async (dispatch, getState) => {
+export const createOrUpdateProduct = (productInfo, formData, onUpdateSuccess) => async (dispatch, getState) => {
     dispatch({
         type: PRODUCT_SAVE_REQUEST
     })
@@ -53,6 +53,7 @@ export const createOrUpdateProduct = (productInfo, formData) => async (dispatch,
                     .then(res => alert(res.data))
                     .catch(err => console.log(err));
             }
+            onUpdateSuccess();
             dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
         }
         //send hinhs
