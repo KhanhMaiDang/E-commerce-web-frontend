@@ -15,9 +15,11 @@ export default function HomeScreen() {
     }, [dispatch])
     return (
         <div>
+            <h2>New arrival</h2>
             {loading ? <LoadingBox></LoadingBox>
                 : error ? <MessageBox variant="danger">{error}</MessageBox>
                     : <div className="row center">
+
                         {products.map(product => (
                             <Product key={product.id} product={product}></Product>
                         ))
