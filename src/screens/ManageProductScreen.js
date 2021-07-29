@@ -54,12 +54,18 @@ export default function ManageProductScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (!id) {
+            setImageB64('');
+        }
+        const trimmedCat = category.trim();
+        console.log("Category " + category);
+        console.log(trimmedCat);
         let formData = new FormData();
         if (image) {
             formData.append("file", image);
         }
         // if (id)
-        dispatch(createOrUpdateProduct({ id, name, author, publisher, description, category, price, remaining }, formData));
+        dispatch(createOrUpdateProduct({ id, name, author, publisher, description, category: trimmedCat, price, remaining }, formData));
         //else put request
     }
 
@@ -106,32 +112,40 @@ export default function ManageProductScreen(props) {
                         <div>
                             <label htmlFor="category">Category</label>
                             <input type="text" id="category" placeholder="Enter category" required
-                                onChange={e => setCategory(e.target.value)} value={category}></input>
+                                onChange={e => {
+                                    //let trimmed = e.target.value.trim();
+                                    setCategory(e.target.value)
+                                    //setCategory(trimmed)
+                                }} value={category}></input>
                         </div>
                         <div>
                             <label htmlFor="price">Price</label>
                             <input type="number" id="price" placeholder="Enter price" required
-                                onChange={e => setPrice(e.target.value)} value={price}></input>
+                                onChange={e => setPrice(e.target.value)} value={price} min="0"></input>
                         </div>
                         <div>
                             <label htmlFor="remaining">Remaining</label>
                             <input type="number" id="remaining" placeholder="Enter remaining" required
-                                onChange={e => setRemaining(e.target.value)} value={remaining}></input>
+                                onChange={e => setRemaining(e.target.value)} value={remaining} min="0"></input>
                         </div>
                         {/* style={[id ? { display: 'visibility' } : { display: "none" }, { cursor: 'pointer' }, { color: 'green' }]} */}
                         <div>
-                            <button type='button' className="button" style={id ? { display: 'visibility' } : { display: "none" }}>
+                            <button type='button' className="button" style={(id && imageB64) ? { display: 'none' } : { display: "none" }}>
                                 <label htmlFor="image">Select image</label>
                             </button>
                             <input type="file" id="image" placeholder="Enter image"
                                 onChange={e => {
                                     setImage(e.target.files[0])
                                     console.log(e.target.files[0].name)
-                                }} style={id ? { display: "none" } : { display: 'visibility' }}></input>
+                                    // }} style={(id && imageB64) ? { display: "none" } : { display: 'visibility' }}></input>
+                                }} style={{ display: "visibility" }}></input>
                             {
-                                imageB64 ? <img src={`data:image/jpg;base64, ${imageB64}`} alt={name}
-                                    style={id ? { display: 'visibility' } : { display: "none" }} />
-                                    : (<h2 style={id ? { display: 'visibility' } : { display: "none" }} >No file chosen</h2>)
+                                (imageB64) ? (<div>
+                                    <h3>Previous image</h3>
+                                    <img src={`data:image/jpg;base64, ${imageB64}`} alt={name}
+                                        style={id ? { display: 'visibility' } : { display: "none" }} />
+                                </div>)
+                                    : (<h2 style={{ display: "none" }} >No file chosen</h2>)
                             }
                         </div>
 

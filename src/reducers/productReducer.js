@@ -83,7 +83,7 @@ export const categoryCreateOrUpdateReducer = (state = { category: {}, success: f
         case CATEGORY_SAVE_SUCCESS:
             return { loading: false, success: true, product: action.payload };
         case CATEGORY_SAVE_FAIL:
-            return { loading: false, error: action.payload };
+            return { loading: false, error: action.payload.message };
         default:
             return state;
     }

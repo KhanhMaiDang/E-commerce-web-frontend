@@ -50,7 +50,17 @@ export default function RegisterScreen(props) {
                 <div>
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" placeholder="Enter username" required
-                        onChange={e => setUsername(e.target.value)} minLength="3" maxLength="20"></input>
+                        onChange={e => {
+                            let username = e.target.value;
+                            if (username.trim().includes(" ")) {
+                                console.log("www");
+                                e.target.setCustomValidity("Username can not contains whitespace")
+                            }
+                            else {
+                                e.target.setCustomValidity("");
+                                setUsername(username.trim())
+                            }
+                        }} minLength="3" maxLength="20"></input>
                 </div>
 
                 <div>
@@ -75,7 +85,7 @@ export default function RegisterScreen(props) {
                     <label htmlFor="phone">Phone number</label>
                     <input type="tel" id="phone" name="phone" minLength="10" maxLength="10" required pattern="[0-9]{10}"
                         onChange={e => setPhoneNumber(e.target.value)}></input>
-                    <small>Format: 0123456789</small><br></br>
+                    <small>Format: 0123456789 (10 numbers without characters)</small><br></br>
                 </div>
 
                 <div>
